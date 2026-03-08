@@ -33,4 +33,9 @@ typedef unsigned long bit_array_index_t;
         } \
     } while (0) \
 
+#define bit_array_setbit (name, index, bool) \
+    (bool ? name[1 + (index / UL_SIZE)] |= (1UL << (index % UL_SIZE)): name[1 + (index / UL_SIZE)] &= ~(1UL << (index % UL_SIZE))) \
+
+#define bit_array_getbit (name, index) \
+    ((name[1 + (index / UL_SIZE)] >> (index % UL_SIZE)) & 1UL) \
 #endif

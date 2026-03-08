@@ -2,6 +2,7 @@
 #define BIT_ARRAY 1
 #include <assert.h>
 #include <stdlib.h>
+#include <limits.h>
 
 typedef unsigned long* bit_array;
 typedef unsigned long bit_array_index_t;
@@ -21,4 +22,15 @@ typedef unsigned long bit_array_index_t;
     name[0] = (unsigned long)(size); \
 
 #define bit_array_free(name) (free(name))
+
+#define bit_array_size(name) (name[0])
+
+#define bit_array_fill(name, bool) \
+    do { \
+        unsigned long idx_count = 1 + ((bit_array_size(name)) + UL_SIZE - 1)/ UL_SIZE; \
+        for (unsigned_long idx = 1; idx < idx_count ; idx++){ \
+            name[idx] = bool ? ULONG_MAX : 0 \
+        } \
+    } while (0) \
+
 #endif

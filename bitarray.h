@@ -67,7 +67,7 @@ inline void bitarray_setbit(bitarray_t name, bitarray_index_t index, bool bool_i
     bool_in ? name[1 + (index / UL_SIZE)] |= (1UL << (index % UL_SIZE)): name[1 + (index / UL_SIZE)] &= ~(1UL << (index % UL_SIZE));
 }
 
-inline bitarray_index_t bitarray_getbit(bitarray_t name, bitarray_index_t index){
+inline bool bitarray_getbit(bitarray_t name, bitarray_index_t index){
     return ((name[1 + (index / UL_SIZE)] >> (index % UL_SIZE)) & 1UL);
 }
 

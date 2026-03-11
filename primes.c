@@ -11,16 +11,20 @@ int main(){
     bitarray_create(field, FIELD_SIZE);
     Eratosthenes(field);
     unsigned long field_size = bitarray_size(field);
-    size_t rot_idx = 0;
+    int res_idx = OUT_MAX - 1; // last index of last_primes
     unsigned long last_primes[OUT_MAX];
-    for (unsigned long field_idx = 0; field_idx < field_size; field_idx++){
+    for (unsigned long field_idx = field_size - 1; field_idx > 0; field_idx--){ // start from highest number (bitarray_idx) and continue to 0
         if (bitarray_getbit(field, field_idx)){
-            last_primes[rot_idx % 10]  = field_idx;
-            rot_idx += 1;
+            last_primes[res_idx]  = field_idx;
+            res_idx -= 1;
+            if (res_idx < 0){ // if list was filled, break
+                break;
+            }
         }
     }
-    for (size_t idx = 0; idx < OUT_MAX; idx++){
-        printf("%lu\n", last_primes[(idx + rot_idx) % 10]);
+    res_idx += 1; // idx ends always 1 position bellow lowest last_primes index
+    for (; res_idx < OUT_MAX; res_idx++){ // print from newest to oldest found
+        printf("%lu\n", last_primes[res_idx]);
     }
     fprintf(stderr, "Time=%.3g\n", (double)(clock()-start)/CLOCKS_PER_SEC);
     return 0;

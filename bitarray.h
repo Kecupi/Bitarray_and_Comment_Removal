@@ -41,7 +41,7 @@ typedef unsigned long bitarray_index_t;
     } while (0)
 
 #define bitarray_setbit(name, index, bool_in) \
-    bool_in ? name[1 + (index / UL_SIZE)] |= (1UL << (index % UL_SIZE)) : name[1 + (index / UL_SIZE)] &= ~(1UL << (index % UL_SIZE))
+    bool_in ? (name[1 + (index / UL_SIZE)] |= (1UL << (index % UL_SIZE))) : (name[1 + (index / UL_SIZE)] &= ~(1UL << (index % UL_SIZE)))
 
 #define bitarray_getbit(name, index) \
     ((name[1 + (index / UL_SIZE)] >> (index % UL_SIZE)) & 1UL)
@@ -64,7 +64,7 @@ inline void bitarray_fill(bitarray_t name, bool bool_in){
 }
 
 inline void bitarray_setbit(bitarray_t name, bitarray_index_t index, bool bool_in){
-    bool_in ? name[1 + (index / UL_SIZE)] |= (1UL << (index % UL_SIZE)): name[1 + (index / UL_SIZE)] &= ~(1UL << (index % UL_SIZE));
+    bool_in ? (name[1 + (index / UL_SIZE)] |= (1UL << (index % UL_SIZE))) : (name[1 + (index / UL_SIZE)] &= ~(1UL << (index % UL_SIZE)));
 }
 
 inline bool bitarray_getbit(bitarray_t name, bitarray_index_t index){

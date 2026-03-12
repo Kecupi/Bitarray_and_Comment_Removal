@@ -13,36 +13,39 @@ int main(int argc, char** argv){
     while ((c = getchar(input)) != EOF){
         switch(state){
             case 0:
-                if (c == "/"){
+                if (c == '/'){
                     state = 1;
                 } else if (c == '"'){
                     state = 4;
                     putchar(c);
+                } else if (c == '\''){
+                    state = 7;
+                    putchar(c);
                 } else {
-                    putchar(c)
+                    putchar(c);
                 }
                 break;
             case 1:
-                if (c == "/"){
-                    putchar(c);
-                } else if (c == "*"){
+                if (c == '/'){
+                    state = 6;
+                } else if (c == '*'){
                     state = 2;
                 } else {
-                    putchar("/");
+                    putchar('/');
                     putchar(c);
                     state = 0;
                 }
                 break;
             case 2:
-                if (c == "*"){
+                if (c == '*'){
                     state = 3;
                 }
                 break;
             case 3:
-                if (c == "/"){
-                    putchar(" ");
+                if (c == '/'){
+                    putchar(' ');
                     state = 0;
-                } else if (c != "*"){
+                } else if (c != '*'){
                     state = 2;
                 }
                 break;
@@ -61,11 +64,33 @@ int main(int argc, char** argv){
                 putchar(c);
                 state = 4;
                 break;
+            case 6:
+                if (c == '\n'){
+                    putchar(' ');
+                    putchar(c);
+                    state = 0;
+                }
+                break;
+            case 7:
+                if (c == '\''){
+                    putchar(c);
+                    state = 0;
+                } else if (c == '\\'){
+                    state = 8;
+                    putchar(c);
+                } else {
+                    putchar(c);
+                }
+                break;
+            case 8:
+                putchar(c);
+                state = 7;
+                break;
             default:
                 break;
         }
     }
-    putchar("\n");
+    putchar('\n');
     if (state != 0){
         error_exit("Unclosed comment")
     }

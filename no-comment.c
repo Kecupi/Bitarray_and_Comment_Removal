@@ -1,3 +1,8 @@
+// no-comment.c
+// Řešení IJC-DU1, příklad a), 16.3.2026
+// Autor: Štěpán Hořenek, FIT
+// Přeloženo: gcc 14.2
+// ...popis příkladu - poznámky, omezení, atd
 #include <stdio.h>
 #include "error.h"
 
@@ -69,7 +74,7 @@ int main(int argc, char** argv){
                 break;
             case 5:
                 putchar(c);
-                state = 4; // aaa \a
+                state = 4;
                 break;
             case 6:
                 if (c == '\n'){
@@ -115,7 +120,7 @@ int main(int argc, char** argv){
                 break;
         }
     }
-    if (state != 0 && state != 6){
+    if (state != 0){
         error_exit("Unclosed comment");
     }
     if (argc > 1){

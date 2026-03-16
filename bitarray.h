@@ -1,3 +1,8 @@
+// bitarray.c
+// Řešení IJC-DU1, příklad a), 16.3.2026
+// Autor: Štěpán Hořenek, FIT
+// Přeloženo: gcc 14.2
+// ...popis příkladu - poznámky, omezení, atd
 #ifndef BITARRAY_H
 #define BITARRAY_H 1
 

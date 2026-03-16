@@ -1,0 +1,33 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+
+#define/* even inside deifne?"*/MACRO
+
+/**
+* @name call
+* @param string // lol
+* @param number / but why *
+* @return nothing
+*/
+void call (char* string, int number){
+    for (int iter = 0; /** why is there even a comment in cycle? */iter < strlen(string); iter++){
+        string[iter] += number;
+    }
+}
+
+int main (int argc, char** argv){
+    int a = 0; // this integer is zero
+    a += 1; /* now i create a multiline
+    comment for no reason */
+    printf("%d", a); 
+    putchar('x'); // this may not actually be useful \
+    but ill do it anyway \
+    and neither this line should be in result
+    char* string = malloc(sizeof(char) * 25); // allocated memory for "some reason"
+    /*/ string[0] = 'd';
+    */string[1] = '\\';
+    free/* "got to free the string!"\*/(string);
+    return 0;
+}
+// what else is better than to end file with pointless comment...

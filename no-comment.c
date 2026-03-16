@@ -2,7 +2,7 @@
 
 int main(int argc, char** argv){
     FILE* input = stdin;
-    if (argc == 2){
+    if (argc > 1){
         input = fopen(argv[1], "r");
         if (input == NULL){
             error_exit("Couldn't open file");
@@ -10,7 +10,7 @@ int main(int argc, char** argv){
     }
     int c;
     int state = 0;
-    while ((c = getchar(input)) != EOF){
+    while ((c = fgetc(input)) != EOF){
         switch(state){
             case 0:
                 if (c == '/'){
@@ -19,7 +19,7 @@ int main(int argc, char** argv){
                     state = 4;
                     putchar(c);
                 } else if (c == '\''){
-                    state = 7;
+                    state = 9;
                     putchar(c);
                 } else {
                     putchar(c);
@@ -33,7 +33,13 @@ int main(int argc, char** argv){
                 } else {
                     putchar('/');
                     putchar(c);
-                    state = 0;
+                    if (c == '\"'){
+                        state = 4;
+                    } else if (c == '\''){
+                        state = 9;
+                    } else {
+                        state = 0;
+                    }
                 }
                 break;
             case 2:
@@ -62,39 +68,56 @@ int main(int argc, char** argv){
                 break;
             case 5:
                 putchar(c);
-                state = 4;
+                state = 4; // aaa \a
                 break;
             case 6:
                 if (c == '\n'){
                     putchar(' ');
                     putchar(c);
                     state = 0;
+                } else if (c == '\\'){
+                    state = 7;
                 }
                 break;
             case 7:
+                if (c == '\n'){
+                    state = 6;
+                } else if (c != '\\'){
+                    state = 8;
+                }
+                break;
+            case 8:
+                if (c == '\n'){
+                    state = 0;
+                    putchar(' ');
+                    putchar(c);
+                } else if (c == '\\'){
+                    state = 7;
+                }
+                break;
+            case 9:
                 if (c == '\''){
                     putchar(c);
                     state = 0;
                 } else if (c == '\\'){
-                    state = 8;
+                    state = 10;
                     putchar(c);
                 } else {
                     putchar(c);
                 }
                 break;
-            case 8:
+            case 10:
                 putchar(c);
-                state = 7;
+                state = 9;
                 break;
             default:
                 break;
         }
     }
-    putchar('\n');
-    if (state != 0){
-        error_exit("Unclosed comment")
+    if (state != 0 && state != 6){
+        error_exit("Unclosed comment");
     }
-    if (argc == 2){
+    if (argc > 1){
         fclose(input);
     }
 }

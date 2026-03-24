@@ -120,6 +120,10 @@ int main(int argc, char** argv){
                 break;
         }
     }
+    if (state == 6){
+        state = 0;
+        putchar(' ');
+    }
     if (state != 0){
         error_exit("Unclosed comment");
     }
